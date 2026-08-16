@@ -1,0 +1,29 @@
+# Sensitive/private medical data
+data/raw/**
+data/processed/**
+data/splits/**
+data/embeddings/**
+!data/raw/README.md
+!data/processed/.gitkeep
+!data/splits/.gitkeep
+!data/embeddings/.gitkeep
+
+# Trained artifacts (may encode private-data information)
+models/**
+!models/README.md
+
+# Local results generated from private data
+results/predictions/**
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

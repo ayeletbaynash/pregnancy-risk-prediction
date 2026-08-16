@@ -1,0 +1,58 @@
+# Final model configuration selected by Optuna.
+# Best trial: 43
+# Objective: minimize average bottom-40% observed risk across valid seeds.
+# Selection seeds: 11, 22, 33.
+# The public pipeline runs one seed at a time; seed 11 is the default reproducible run.
+
+data:
+  raw: data/raw
+  processed: data/processed
+  splits: data/splits
+  embeddings: data/embeddings
+  sample: data/sample
+
+files:
+  gdm: GDM_OH.csv
+  pe: PE.csv
+  sga: SGA.csv
+  meir: Meir.csv
+  meir_pregnancy: pregnancy_merged.csv
+
+split:
+  test_size: 0.20
+  random_state: 11
+
+model_selection:
+  objective: minimize_average_bottom_40_risk_across_valid_seeds
+  best_trial_number: 43
+  best_value_average_bottom_40_risk: 0.07733892952652449
+  validation_seeds: [11, 22, 33]
+  min_valid_seeds: 2
+  min_valid_experiments: 4
+
+autoencoder:
+  latent_dim: 8
+  hidden_layer_sizes: [64, 32]
+  reconstruction_weight: 0.46056918753632536
+  classification_weight: 2.8863444400779854
+  sinkhorn_weight: 0.025919348711169958
+  sinkhorn_epsilon: 0.0068666975353390974
+  sinkhorn_iters: 10
+  epochs: 150
+  patience: 37
+  batch_size: 512
+  learning_rate: 0.0002013691598725528
+
+mlp:
+  backend: torch
+  hidden_layer_sizes: [64, 32]
+  activation: gelu
+  dropout: 0.2555308876182672
+  alpha: 0.005497900091628625
+  learning_rate_init: 0.00010049347258205648
+  max_iter: 800
+  batch_size: 1024
+  patience: 48
+
+evaluation:
+  low_risk_percentile: 40

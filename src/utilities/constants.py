@@ -1,0 +1,6 @@
+"""Project-wide constants and canonical feature names."""
+
+SOURCE_TO_ID = {"SGA": 0, "GDM": 1, "PE": 2, "MEIR": 3}
+BASE_RISK_COLS = ["pe", "sga_st3", "preterm"]
+GDM_OUTCOME_CANDIDATES = ["a GDM vs no", "gdm", "GDM", "gestational_diabetes"]
+FEATURES = ['age', 'height', 'weight12', 'bmi', 'weight22', 'race_black', 'race_east_asian', 'race_mixed', 'race_south_asian', 'race_white', 'smoking', 'chronic_htn', 'sle', 'conception_ivf', 'conception_ovulation_drugs', 'conception_spontaneous', 'Diabetes_No', 'dm_type1', 'dm_type2', 'FH_dm_type1', 'FH_dm_type2', 'fh_pe_mother', 'fh_pe_sister', 'FH PE_No', 'FH DM no', 'prev_gdm', 'prev_no_gdm', 'prev_gdm_nullip', 'prev_fgr', 'prev_no_fgr', 'prev_fgr_nullip', 'prev_lga', 'prev_no_lga', 'prev_lga_nullip', 'prev_iud', 'prev_no_iud', 'prev_iud_nullip', 'Previous_death_Death_16-23w', 'Previous_death_Death_st16w', 'Previous_death_Death_gt24w', 'prev_pe', 'prev_pe_no', 'prev_pe_nullip', 'Previous_death_No_death', 'last_out_ga', 'Last BW%', 'last_bw_z', 'last_bw_cent', 'interval', 'ga12', 'crl12', 'pappa12', 'utpi12', 'plgf', 'plgf.machine_Roche', 'map', 'hCG', 'ga22', 'efw22', 'utpi22', 'pappa_Delfia', 'Aspirin', 'nulliparity', 'lc', 'first_trimester_ds', 'asthma', 'hepatitis_c', 'cancer', 'rheumatoid_arthritis', 'hypothyroidism', 'hyperthyroidism']
