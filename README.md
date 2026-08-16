@@ -1,4 +1,4 @@
-This research was conducted by Gavriel Schwartz and Ayelet Baynash under the supervision of Prof. Yoram Luzon as part of his YOLO Lab and final Bioinformatics B.Sc. project @ Bar-Ilan University.
+This research was conducted by Gavriel Schwartz and Ayelet Baynash under the supervision of Prof. Yoram Luzon as part of his YOLO Lab and our final Bioinformatics B.Sc. project @ Bar-Ilan University.
 
 See more of YOLO Lab at https://sites.biu.ac.il/en/yolo-lab
 
@@ -18,36 +18,6 @@ Because GDM labels are not available in every source, the representation model u
 - **Head 4:** PE OR severe SGA OR preterm birth OR GDM.
 
 Each training sample is routed only to the head for which its labels are valid.
-
-## Model architecture
-
-```text
-Private raw datasets
-       │
-       ▼
-01  Data harmonization
-       │
-       ▼
-02  Target creation + single 80/20 split
-       │
-       ├────────────── held-out test sets
-       ▼
-03  Two-head supervised autoencoder
-       │
-       ├─ reconstruction loss
-       ├─ supervised classification loss
-       └─ Sinkhorn source-alignment loss
-       │
-       ▼
-04  Shared latent embeddings
-       │
-       ▼
-05  Leave-one-dataset-out MLP prediction
-       │
-       ▼
-06  Evaluation and figures
-    ROC / PR / risk-by-percentile / UMAP
-```
 
 ## Repository structure
 
