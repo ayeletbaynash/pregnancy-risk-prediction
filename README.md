@@ -184,6 +184,44 @@ The published configuration corresponds to **Optuna trial 43**, selected by mini
 
 In addition to ROC-AUC and average precision, the project evaluates the observed complication rate among patients ranked in the lowest predicted-risk percentiles. In particular, the pipeline reports cumulative observed risk and positive-event capture in the bottom 40% of predicted scores.
 
+## Model Architecture & Training Pipeline
+
+![Model Architecture & Training Pipeline](results/readme/architecture.png)
+
+This comprehensive architecture diagram illustrates the complete workflow for building a unified pregnancy risk prediction model across four heterogeneous datasets:
+
+**Stage 01 – Data Integration & Unified Risk:** The pipeline begins by harmonizing data from four clinical sources (PE, GDM, SGA, and Meir). These independent datasets are aligned to a shared schema through standardized feature definitions and unified risk target construction. Each dataset contributes its available outcome labels (not all datasets track all complications), enabling cross-dataset learning.
+
+**Stage 02 – Shared Embedding (Two-Head Supervised Autoencoder):** A supervised autoencoder with two prediction heads learns a shared latent representation (8-dimensional). The architecture minimizes three loss terms:
+- **MSE (Reconstruction):** Preserves input fidelity through reconstruction loss
+- **BCE (Binary Cross-Entropy):** Optimizes prediction of the unified risk target
+- **Sinkhorn Divergence:** Aligns the latent distributions across datasets, creating a unified clinical language
+
+Head A predicts PE OR severe SGA OR preterm birth (available in all sources). Head B adds GDM to the risk definition (available in GDM and Meir only). Each sample is routed to the appropriate head based on label availability.
+
+**Stage 03 – Risk Prediction (Leave-One-Dataset-Out):** The learned embeddings are passed to downstream MLPs trained in a leave-one-dataset-out (LODO) scheme. Each MLP is trained on three datasets and tested on the held-out fourth, ensuring generalization to new sources. The model produces risk scores (0–1) and identifies low-risk subgroups ranked by predicted percentile.
+
+**Stage 04 – Validation & Insight:** The alignment is validated through UMAP visualization, confirming that the Sinkhorn-aligned latent space integrates all four source-specific clusters into a unified manifold. Feature importance and hyperparameter analysis complete the interpretability assessment.
+
+**Key insight:** Rather than naively concatenating datasets, this architecture learns a shared clinical language that preserves each source's distribution properties while maximizing predictive generalization.
+
+## Results
+
+### Cumulative Observed Risk Curve
+
+![Cumulative Observed Risk Curve](results/readme/corc.png)
+
+This graph demonstrates the critical clinical impact of the alignment strategy by comparing cumulative observed risk before and after Sinkhorn-based source alignment.
+
+**Before Alignment (Orange line):** When embeddings are trained without cross-dataset alignment, the model exhibits **dataset-specific bias**. Among the patients predicted as lowest-risk (percentile 0–20), the true complication rate is approximately 6–8%, rising steeply to 20% in the 80–100 percentile range. This steep curve suggests the model is overfitting to source-specific patterns and poorly generalizes.
+
+**After Alignment (Green line):** With Sinkhorn-based distribution alignment, the curve flattens significantly, especially in the critical low-risk region. Among the lowest-risk percentiles, the true complication rate remains around 4.5–5%, and rises more gently across the percentile range, reaching only ~14% at the highest-risk end. The flatter curve indicates:
+- **Reliable low-risk identification:** Patients ranked in the bottom 40% have substantially reduced true risk
+- **Better generalization:** The model produces consistent risk rankings across different dataset sources
+- **Clinical actionability:** The sharp separation between low-risk and high-risk populations makes clinical triage decisions more defensible
+
+The cumulative observed risk curve with 40% event capture in the bottom risk percentiles confirms the model meets the project's primary goal: **reliable identification of the lowest-risk pregnancy subgroup**.
+
 ## Privacy and responsible use
 
 - No original patient-level dataset is included.
@@ -198,5 +236,5 @@ The outer source-wise 80/20 split occurs once, before representation training. T
 
 ## Authors
 
-Final-year Computational Biology @ Bar Ilan University / Bioinformatics project.
-Made by Gavriel Schwarz and Ayelet Baynash under the supervision of Yoram Luzon.
+Final-year Computational Biology @ Bar Ilan University / Bioinformatics project. \
+Made by Gavriel Schwartz and Ayelet Baynash under the supervision of Yoram Luzon.
