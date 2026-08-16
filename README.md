@@ -1,3 +1,7 @@
+This research was conducted by Gavriel Schwartz and Ayelet Baynash under the supervision of Prof. Yoram Luzon as part of his YOLO Lab and final Bioinformatics B.Sc. project @ Bar-Ilan University.
+
+See more of YOLO Lab at https://sites.biu.ac.il/en/yolo-lab
+
 # Predicting Pregnancy-Related Risks Using Machine Learning
 
 A cross-dataset machine-learning pipeline for identifying pregnancies with a low predicted risk of adverse outcomes. The project combines heterogeneous pregnancy datasets through a shared supervised latent representation and evaluates whether a model trained on several data sources can generalize to a held-out source.
@@ -233,8 +237,3 @@ The cumulative observed risk curve with 40% event capture in the bottom risk per
 ## Reproducibility notes
 
 The outer source-wise 80/20 split occurs once, before representation training. The autoencoder may create an additional internal validation subset from the training portion solely for early stopping; the held-out test data remain untouched during model fitting.
-
-## Authors
-
-Final-year Computational Biology @ Bar Ilan University / Bioinformatics project. \
-Made by Gavriel Schwartz and Ayelet Baynash under the supervision of Yoram Luzon.
